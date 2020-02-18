@@ -149,23 +149,27 @@ def main(argv):
     try:
           opts, args = getopt.getopt(argv,"hi:o:p:",["ifile=","ofile=","password="])
     except getopt.GetoptError:
-          print('test.py -i <inputfile> -o <outputfile> -p <password>')
+          print('main.py -i <inputfile> -o <outputfile> -p <password>')
           sys.exit(2)
     for opt, arg in opts:
-        if opt in ("-h", "--help"):
-            print('test.py -i <inputfile> -o <outputfile>')
-            sys.exit()
-        elif opt in ("-i", "--ifile"):
+        if opt in ("-i", "--ifile"):
             inputfile = arg
         elif opt in ("-o", "--ofile"):
             outputfile = arg
         elif opt in ("-p", "--password"):
             password = arg
 
-    if sys.argv[1] == 'enc':
+    if sys.argv[1] in ("-h", "--help"):
+            print('Encryption:\nmain.py enc -i <inputfile> -o <outputfile> -p <password>')
+            print('Decryption:\nmain.py dec -i <inputfile> -o <outputfile> -p <password>')
+            sys.exit()
+    elif sys.argv[1] == 'enc':
         encrypt(password ,inputfile, outputfile)
     elif sys.argv[1] == 'dec':
         decrypt(password ,inputfile, outputfile)
 
 if __name__ == '__main__':
-    main(sys.argv[2:])
+    if len(sys.argv) > 1:
+        main(sys.argv[2:])
+    else:
+        print('Use -h flag for help.')
